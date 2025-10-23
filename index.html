@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>年产20000吨三文鱼工厂设计</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0EA5E9',
+                        secondary: '#06B6D4',
+                        accent: '#F59E0B',
+                        ocean: '#0891B2',
+                        fish: '#F97316'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .glass-effect {
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+            .gradient-ocean {
+                background: linear-gradient(135deg, #0EA5E9 0%, #06B6D4 50%, #0891B2 100%);
+            }
+            .gradient-fish {
+                background: linear-gradient(135deg, #F97316 0%, #FB923C 50%, #FDBA74 100%);
+            }
+            .hover-lift {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .hover-lift:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            }
+            .pulse-slow {
+                animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- 导航栏 -->
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-lg transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 gradient-ocean rounded-lg flex items-center justify-center">
+                        <i class="fa fa-fish text-white text-lg"></i>
+                    </div>
+                    <h1 class="text-xl font-bold text-gray-900">三文鱼工厂设计</h1>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#overview" class="text-gray-700 hover:text-primary transition-colors">工厂概览</a>
+                    <a href="#workshops" class="text-gray-700 hover:text-primary transition-colors">生产车间</a>
+                    <a href="#process" class="text-gray-700 hover:text-primary transition-colors">工艺流程</a>
+                    <a href="#calculations" class="text-gray-700 hover:text-primary transition-colors">物料计算</a>
+                    <a href="#equipment" class="text-gray-700 hover:text-primary transition-colors">设备配置</a>
+                </div>
+                <button class="md:hidden" onclick="toggleMobileMenu()">
+                    <i class="fa fa-bars text-gray-700"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 移动端菜单 -->
+    <div id="mobile-menu" class="fixed top-16 left-0 w-full bg-white shadow-lg transform -translate-y-full transition-transform duration-300 md:hidden z-40">
+        <div class="px-4 py-6 space-y-4">
+            <a href="#overview" class="block text-gray-700 hover:text-primary transition-colors">工厂概览</a>
+            <a href="#workshops" class="block text-gray-700 hover:text-primary transition-colors">生产车间</a>
+            <a href="#process" class="block text-gray-700 hover:text-primary transition-colors">工艺流程</a>
+            <a href="#calculations" class="block text-gray-700 hover:text-primary transition-colors">物料计算</a>
+            <a href="#equipment" class="block text-gray-700 hover:text-primary transition-colors">设备配置</a>
+        </div>
+    </div>
+
+    <!-- 英雄区域 -->
+    <section class="pt-16 gradient-ocean text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                    年产20000吨
+                    <span class="block text-yellow-300">三文鱼加工厂</span>
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 text-blue-100">
+                    现代化水产加工解决方案 · 全流程自动化生产 · 可持续发展设计
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="scrollToSection('workshops')" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105">
+                        <i class="fa fa-industry mr-2"></i>探索车间
+                    </button>
+                    <button onclick="scrollToSection('calculations')" class="border-2 border-white hover:bg-white hover:text-primary text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300">
+                        <i class="fa fa-calculator mr-2"></i>查看计算
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 工厂概览 -->
+    <section id="overview" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">工厂概览</h2>
+                <p class="text-xl text-gray-600">智能化三文鱼加工工厂设计方案</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <div class="text-center hover-lift bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl">
+                    <div class="w-16 h-16 gradient-ocean rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa fa-tachometer text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">20,000吨</h3>
+                    <p class="text-gray-600">年产能</p>
+                </div>
+                
+                <div class="text-center hover-lift bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-xl">
+                    <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa fa-cogs text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">6个</h3>
+                    <p class="text-gray-600">专业车间</p>
+                </div>
+                
+                <div class="text-center hover-lift bg-gradient-to-br from-orange-50 to-orange-100 p-8 rounded-xl">
+                    <div class="w-16 h-16 gradient-fish rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa fa-recycle text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">70%</h3>
+                    <p class="text-gray-600">原料利用率</p>
+                </div>
+                
+                <div class="text-center hover-lift bg-gradient-to-br from-purple-50 to-purple-100 p-8 rounded-xl">
+                    <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa fa-bullseye text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">自动化</h3>
+                    <p class="text-gray-600">智能生产</p>
+                </div>
+            </div>
+
+            <!-- 工厂布局图 -->
+            <div class="bg-gray-50 rounded-2xl p-8">
+                <h3 class="text-2xl font-bold text-center text-gray-900 mb-8">工厂布局示意图</h3>
+                <div class="relative">
+                    <div class="grid grid-cols-3 gap-4 max-w-4xl mx-auto">
+                        <!-- 预处理区 -->
+                        <div class="col-span-3 bg-blue-100 p-4 rounded-lg text-center border-2 border-blue-300">
+                            <i class="fa fa-filter text-blue-600 text-xl mb-2"></i>
+                            <h4 class="font-bold text-blue-800">原料预处理区</h4>
+                            <p class="text-sm text-blue-600">去头去尾去内脏</p>
+                        </div>
+                        
+                        <!-- 车间布局 -->
+                        <div class="bg-green-100 p-4 rounded-lg text-center border-2 border-green-300 hover-lift cursor-pointer" onclick="showWorkshopDetail('fresh')">
+                            <i class="fa fa-snowflake-o text-green-600 text-xl mb-2"></i>
+                            <h4 class="font-bold text-green-800">冰鲜车间</h4>
+                            <p class="text-sm text-green-600">4000吨/年</p>
+                        </div>
+                        
+                        <div class="bg-cyan-100 p-4 rounded-lg text-center border-2 border-cyan-300 hover-lift cursor-pointer" onclick="showWorkshopDetail('frozen')">
+                            <i class="fa fa-bullseye text-cyan-600 text-xl mb-2"></i>
+                            <h4 class="font-bold text-cyan-800">冷冻车间</h4>
+                            <p class="text-sm text-cyan-600">4000吨/年</p>
+                        </div>
+                        
+                        <div class="bg-purple-100 p-4 rounded-lg text-center border-2 border-purple-300 hover-lift cursor-pointer" onclick="showWorkshopDetail('slice')">
+                            <i class="fa fa-cut text-purple-600 text-xl mb-2"></i>
+                            <h4 class="font-bold text-purple-800">切片车间</h4>
+                            <p class="text-sm text-purple-600">2000吨/年</p>
+                        </div>
+                        
+                        <div class="bg-red-100 p-4 rounded-lg text-center border-2 border-red-300 hover-lift cursor-pointer" onclick="showWorkshopDetail('can')">
+                            <i class="fa fa-can text-red-600 text-xl mb-2"></i>
+                            <h4 class="font-bold text-red-800">罐头车间</h4>
+                            <p class="text-sm text-red-600">3000吨/年</p>
+                        </div>
+                        
+                        <div class="bg-yellow-100 p-4 rounded-lg text-center border-2 border-yellow-300 hover-lift cursor-pointer" onclick="showWorkshopDetail('floss')">
+                            <i class="fa fa-fire text-yellow-600 text-xl mb-2"></i>
+                            <h4 class="font-bold text-yellow-800">鱼肉松车间</h4>
+                            <p class="text-sm text-yellow-600">4000吨/年</p>
+                        </div>
+                        
+                        <div class="bg-orange-100 p-4 rounded-lg text-center border-2 border-orange-300 hover-lift cursor-pointer" onclick="showWorkshopDetail('smoked')">
+                            <i class="fa fa-smoking text-orange-600 text-xl mb-2"></i>
+                            <h4 class="font-bold text-orange-800">熏鱼车间</h4>
+                            <p class="text-sm text-orange-600">3000吨/年</p>
+                        </div>
+                        
+                        <!-- 副产物处理 -->
+                        <div class="col-span-3 bg-gray-100 p-4 rounded-lg text-center border-2 border-gray-300">
+                            <i class="fa fa-recycle text-gray-600 text-xl mb-2"></i>
+                            <h4 class="font-bold text-gray-800">副产物处理区</h4>
+                            <p class="text-sm text-gray-600">鱼粉生产（30%损耗转化）</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 生产车间详情 -->
+    <section id="workshops" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">生产车间详情</h2>
+                <p class="text-xl text-gray-600">六大专业车间，全流程覆盖</p>
+            </div>
+
+            <!-- 车间详情卡片 -->
+            <div id="workshop-details" class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- 预处理车间 -->
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover-lift">
+                    <div class="gradient-ocean p-6 text-white">
+                        <h3 class="text-2xl font-bold mb-2">
+                            <i class="fa fa-filter mr-3"></i>原料预处理车间
+                        </h3>
+                        <p class="text-blue-100">Initial Processing Workshop</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-6">
+                            <h4 class="font-bold text-gray-900 mb-3">工艺流程</h4>
+                            <div class="space-y-2">
+                                <div class="flex items-center">
+                                    <span class="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">1</span>
+                                    <span>原料验收与暂养</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">2</span>
+                                    <span>去鳞清洗</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">3</span>
+                                    <span>去头去尾处理</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">4</span>
+                                    <span>开膛去内脏</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">5</span>
+                                    <span>清洗分级</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h4 class="font-bold text-gray-900 mb-3">主要设备</h4>
+                            <div class="grid grid-cols-2 gap-2">
+                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">自动去头机</span>
+                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">去内脏机</span>
+                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">清洗机</span>
+                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">分级机</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-yellow-800 mb-2">物料平衡</h4>
+                            <p class="text-sm text-yellow-700 mb-2">原料鱼：20,000吨/年</p>
+                            <p class="text-sm text-yellow-700 mb-2">预处理损耗：30%（6,000吨）</p>
+                            <p class="text-sm text-yellow-700">可用净肉：14,000吨/年</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 车间数据图表 -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">
+                        <i class="fa fa-pie-chart mr-3 text-primary"></i>车间产能分配
+                    </h3>
+                    <canvas id="workshopChart" class="w-full h-64"></canvas>
+                    
+                    <div class="mt-6 grid grid-cols-2 gap-4">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-primary">14,000吨</div>
+                            <div class="text-sm text-gray-600">净肉产量</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-fish">6,000吨</div>
+                            <div class="text-sm text-gray-600">鱼粉原料</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 工艺流程 -->
+    <section id="process" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">工艺流程</h2>
+                <p class="text-xl text-gray-600">标准化生产流程，确保产品质量</p>
+            </div>
+
+            <div class="relative">
+                <!-- 时间线 -->
+                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-primary to-secondary"></div>
+                
+                <!-- 流程步骤 -->
+                <div class="space-y-12">
+                    <!-- 步骤1 -->
+                    <div class="relative flex items-center">
+                        <div class="w-1/2 pr-8 text-right">
+                            <div class="bg-blue-50 p-6 rounded-lg shadow-lg">
+                                <h3 class="text-xl font-bold text-blue-900 mb-2">原料接收</h3>
+                                <p class="text-blue-700">新鲜三文鱼原料验收，暂养在0-4℃环境中</p>
+                            </div>
+                        </div>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 gradient-ocean rounded-full flex items-center justify-center text-white font-bold">1</div>
+                        <div class="w-1/2 pl-8"></div>
+                    </div>
+
+                    <!-- 步骤2 -->
+                    <div class="relative flex items-center">
+                        <div class="w-1/2 pr-8"></div>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 gradient-ocean rounded-full flex items-center justify-center text-white font-bold">2</div>
+                        <div class="w-1/2 pl-8">
+                            <div class="bg-green-50 p-6 rounded-lg shadow-lg">
+                                <h3 class="text-xl font-bold text-green-900 mb-2">预处理</h3>
+                                <p class="text-green-700">去头、去尾、去内脏，清洗分级处理</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 步骤3 -->
+                    <div class="relative flex items-center">
+                        <div class="w-1/2 pr-8 text-right">
+                            <div class="bg-purple-50 p-6 rounded-lg shadow-lg">
+                                <h3 class="text-xl font-bold text-purple-900 mb-2">开片分割</h3>
+                                <p class="text-purple-700">自动开片机分割鱼柳，去除鱼骨鱼刺</p>
+                            </div>
+                        </div>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 gradient-ocean rounded-full flex items-center justify-center text-white font-bold">3</div>
+                        <div class="w-1/2 pl-8"></div>
+                    </div>
+
+                    <!-- 步骤4 -->
+                    <div class="relative flex items-center">
+                        <div class="w-1/2 pr-8"></div>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 gradient-ocean rounded-full flex items-center justify-center text-white font-bold">4</div>
+                        <div class="w-1/2 pl-8">
+                            <div class="bg-orange-50 p-6 rounded-lg shadow-lg">
+                                <h3 class="text-xl font-bold text-orange-900 mb-2">精深加工</h3>
+                                <p class="text-orange-700">根据产品类型进行切片、罐头、鱼松、熏制等加工</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 步骤5 -->
+                    <div class="relative flex items-center">
+                        <div class="w-1/2 pr-8 text-right">
+                            <div class="bg-red-50 p-6 rounded-lg shadow-lg">
+                                <h3 class="text-xl font-bold text-red-900 mb-2">包装检验</h3>
+                                <p class="text-red-700">真空包装，金属检测，质量检验</p>
+                            </div>
+                        </div>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 gradient-ocean rounded-full flex items-center justify-center text-white font-bold">5</div>
+                        <div class="w-1/2 pl-8"></div>
+                    </div>
+
+                    <!-- 步骤6 -->
+                    <div class="relative flex items-center">
+                        <div class="w-1/2 pr-8"></div>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 gradient-ocean rounded-full flex items-center justify-center text-white font-bold">6</div>
+                        <div class="w-1/2 pl-8">
+                            <div class="bg-teal-50 p-6 rounded-lg shadow-lg">
+                                <h3 class="text-xl font-bold text-teal-900 mb-2">冷链存储</h3>
+                                <p class="text-teal-700">成品冷藏或冷冻存储，冷链运输</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 物料和能量计算 -->
+    <section id="calculations" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">物料和能量计算</h2>
+                <p class="text-xl text-gray-600">精确的物料平衡和能量消耗分析</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- 物料平衡计算 -->
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">
+                        <i class="fa fa-balance-scale mr-3 text-primary"></i>物料平衡计算
+                    </h3>
+                    
+                    <div class="space-y-6">
+                        <!-- 原料投入 -->
+                        <div class="border-l-4 border-primary pl-4">
+                            <h4 class="font-bold text-gray-900 mb-2">原料投入</h4>
+                            <p class="text-gray-600">年处理三文鱼原料：<span class="font-bold text-primary">20,000吨</span></p>
+                        </div>
+
+                        <!-- 预处理损耗 -->
+                        <div class="border-l-4 border-red-500 pl-4">
+                            <h4 class="font-bold text-gray-900 mb-2">预处理损耗</h4>
+                            <p class="text-gray-600">去头去尾去内脏损耗：<span class="font-bold text-red-500">30% (6,000吨)</span></p>
+                            <p class="text-gray-600">其中鱼骨占比：<span class="font-bold text-orange-500">20% (4,000吨)</span></p>
+                        </div>
+
+                        <!-- 可用净肉 -->
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <h4 class="font-bold text-gray-900 mb-2">可用净肉</h4>
+                            <p class="text-gray-600">预处理后净肉：<span class="font-bold text-green-500">14,000吨</span></p>
+                        </div>
+
+                        <!-- 车间分配 -->
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-gray-900 mb-3">车间产能分配</h4>
+                            <div class="space-y-2">
+                                <div class="flex justify-between">
+                                    <span>冰鲜车间：</span>
+                                    <span class="font-bold text-green-600">4,000吨</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>冷冻车间：</span>
+                                    <span class="font-bold text-cyan-600">4,000吨</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>切片车间：</span>
+                                    <span class="font-bold text-purple-600">2,000吨</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>罐头车间：</span>
+                                    <span class="font-bold text-red-600">3,000吨</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>鱼肉松车间：</span>
+                                    <span class="font-bold text-yellow-600">4,000吨</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>熏鱼车间：</span>
+                                    <span class="font-bold text-orange-600">3,000吨</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 副产物利用 -->
+                        <div class="border-l-4 border-yellow-500 pl-4">
+                            <h4 class="font-bold text-gray-900 mb-2">副产物利用</h4>
+                            <p class="text-gray-600">鱼粉原料：<span class="font-bold text-yellow-500">6,000吨</span></p>
+                            <p class="text-gray-600">预计产鱼粉：<span class="font-bold text-yellow-500">3,600吨</span>（60%转化率）</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 能量消耗计算 -->
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">
+                        <i class="fa fa-bolt mr-3 text-yellow-500"></i>能量消耗计算
+                    </h3>
+                    
+                    <div class="space-y-6">
+                        <!-- 电力消耗 -->
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-blue-900 mb-3">电力消耗</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span>预处理设备：</span>
+                                    <span>800 kW·h/吨</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>制冷设备：</span>
+                                    <span>1,200 kW·h/吨</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>加工设备：</span>
+                                    <span>600 kW·h/吨</span>
+                                </div>
+                                <div class="flex justify-between font-bold text-blue-600">
+                                    <span>单位产品电耗：</span>
+                                    <span>2,600 kW·h/吨</span>
+                                </div>
+                                <div class="flex justify-between font-bold text-blue-800">
+                                    <span>年总电耗：</span>
+                                    <span>52,000,000 kW·h</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 蒸汽消耗 -->
+                        <div class="bg-orange-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-orange-900 mb-3">蒸汽消耗</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span>蒸煮工艺：</span>
+                                    <span>0.8吨/吨产品</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>杀菌工艺：</span>
+                                    <span>1.2吨/吨产品</span>
+                                </div>
+                                <div class="flex justify-between font-bold text-orange-600">
+                                    <span>单位蒸汽消耗：</span>
+                                    <span>2.0吨/吨产品</span>
+                                </div>
+                                <div class="flex justify-between font-bold text-orange-800">
+                                    <span>年总蒸汽消耗：</span>
+                                    <span>40,000吨</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 水消耗 -->
+                        <div class="bg-cyan-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-cyan-900 mb-3">水消耗</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span>清洗用水：</span>
+                                    <span>15吨/吨产品</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>工艺用水：</span>
+                                    <span>8吨/吨产品</span>
+                                </div>
+                                <div class="flex justify-between font-bold text-cyan-600">
+                                    <span>单位水消耗：</span>
+                                    <span>23吨/吨产品</span>
+                                </div>
+                                <div class="flex justify-between font-bold text-cyan-800">
+                                    <span>年总水消耗：</span>
+                                    <span>460,000吨</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 能耗指标 -->
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-green-900 mb-3">综合能耗指标</h4>
+                            <div class="grid grid-cols-2 gap-4 text-center">
+                                <div>
+                                    <div class="text-2xl font-bold text-green-600">2,600</div>
+                                    <div class="text-sm text-green-700">kW·h/吨</div>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-bold text-green-600">2.0</div>
+                                    <div class="text-sm text-green-700">吨蒸汽/吨</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 物料流程图 -->
+            <div class="mt-12 bg-white rounded-2xl shadow-xl p-8">
+                <h3 class="text-2xl font-bold text-center text-gray-900 mb-8">物料流程图</h3>
+                <canvas id="materialFlowChart" class="w-full h-80"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- 设备配置 -->
+    <section id="equipment" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">设备配置</h2>
+                <p class="text-xl text-gray-600">国际先进设备，确保生产效率</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- 预处理设备 -->
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 hover-lift">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 gradient-ocean rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa fa-filter text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-blue-900">预处理设备</h3>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div class="bg-white p-3 rounded-lg shadow-sm">
+                            <h4 class="font-semibold text-blue-800">BAADER 434去头机</h4>
+                            <p class="text-sm text-blue-600">产能：1500条/小时</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg shadow-sm">
+                            <h4 class="font-semibold text-blue-800">自动去内脏机</h4>
+                            <p class="text-sm text-blue-600">产能：1200条/小时</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg shadow-sm">
+                            <h4 class="font-semibold text-blue-800">高压清洗机</h4>
+                            <p class="text-sm text-blue-600">压力：150bar</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg shadow-sm">
+                            <h4 class="font-semibold text-blue-800">分级分选机</h4>
+                            <p class="text-sm text-blue-600">精度：±5g</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 加工设备 -->
+                <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6 hover-lift">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa fa-cogs text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-green-900">加工设备</h3>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div class="bg-white p-3 rounded-lg shadow-sm">
+                            <h4 class="font-semibold text-green-800">MAJA ESB 4434去皮机</h4>
+                            <p class="text-sm text-green-600">产能：200片/分钟</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg shadow-sm">
+                            <h4 class="font-semibold text-green-800">MS 2612拔刺机</h4>
+                            <p class="text-sm text-green-600">产能：108片/分钟</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg shadow-sm">
+                            <h4 class="font-semibold text-green-800">切片机MSC 180</h4>
+                            <p class="text-sm text-green-600">产能：180片/分钟</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg shadow-sm">
+                            <h4 class="font-semibold text-green-800">真空包装机</h4>
+                            <p class="text-sm text-green-600">包装速度：50包/分钟</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 专用设备 -->
+                <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-6 hover-lift">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa fa-bullseye text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-purple-900">专用设备</h3>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div class="bg-white p-3 rounded-lg shadow-sm">
+                            <h4 class="font-semibold text-purple-800">罐头杀菌锅</h4>
+                            <p class="text-sm text-purple-600">温度：121℃</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg shadow-sm">
+                            <h4 class="font-semibold text-purple-800">鱼肉松炒松机</h4>
+                            <p class="text-sm text-purple-600">容量：50kg/批次</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg shadow-sm">
+                            <h4 class="font-semibold text-purple-800">烟熏炉</h4>
+                            <p class="text-sm text-purple-600">温度：40-80℃</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg shadow-sm">
+                            <h4 class="font-semibold text-purple-800">金属探测器</h4>
+                            <p class="text-sm text-purple-600">精度：Fe≥1.0mm</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 设备投资估算 -->
+            <div class="mt-12 bg-gray-50 rounded-2xl p-8">
+                <h3 class="text-2xl font-bold text-center text-gray-900 mb-8">设备投资估算</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-blue-600 mb-2">800万</div>
+                        <div class="text-sm text-gray-600">预处理设备</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-green-600 mb-2">1,200万</div>
+                        <div class="text-sm text-gray-600">加工设备</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-purple-600 mb-2">600万</div>
+                        <div class="text-sm text-gray-600">专用设备</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-red-600 mb-2">2,600万</div>
+                        <div class="text-sm text-gray-600">总投资</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="gradient-ocean text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">
+                        <i class="fa fa-fish mr-2"></i>三文鱼工厂设计
+                    </h3>
+                    <p class="text-blue-100">
+                        专业的水产加工工厂设计方案，致力于为客户提供高效、环保、可持续的加工解决方案。
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">核心数据</h4>
+                    <div class="space-y-2 text-blue-100">
+                        <p>年产能：20,000吨</p>
+                        <p>车间数量：6个</p>
+                        <p>原料利用率：70%</p>
+                        <p>自动化程度：90%</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">技术特点</h4>
+                    <div class="space-y-2 text-blue-100">
+                        <p>• 全流程自动化</p>
+                        <p>• 标准化生产</p>
+                        <p>• 环保节能设计</p>
+                        <p>• 质量追溯体系</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-blue-400 mt-8 pt-8 text-center text-blue-100">
+                <p>&copy; 2025 三文鱼工厂设计方案. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 车间详情模态框 -->
+    <div id="workshop-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b">
+                <div class="flex justify-between items-center">
+                    <h3 id="modal-title" class="text-2xl font-bold text-gray-900"></h3>
+                    <button onclick="closeWorkshopModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fa fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="modal-content" class="p-6">
+                <!-- 动态内容 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 移动端菜单切换
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('-translate-y-full');
+        }
+
+        // 平滑滚动
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('bg-white/95');
+                navbar.classList.remove('bg-white/90');
+            } else {
+                navbar.classList.add('bg-white/90');
+                navbar.classList.remove('bg-white/95');
+            }
+        });
+
+        // 车间详情数据
+        const workshopData = {
+            fresh: {
+                title: '冰鲜车间',
+                capacity: '4,000吨/年',
+                process: [
+                    '鱼片修整分级',
+                    '真空包装',
+                    '金属检测',
+                    '冷藏存储'
+                ],
+                equipment: [
+                    '鱼片修整工作台',
+                    '真空包装机',
+                    '金属探测器',
+                    '冷藏库'
+                ],
+                energy: '800 kW·h/吨',
+                color: 'green'
+            },
+            frozen: {
+                title: '冷冻车间',
+                capacity: '4,000吨/年',
+                process: [
+                    '鱼片预处理',
+                    '单冻机冻结',
+                    '称重包装',
+                    '冷冻存储'
+                ],
+                equipment: [
+                    '单冻机',
+                    '自动称重机',
+                    '包装机',
+                    '冷冻库'
+                ],
+                energy: '1,500 kW·h/吨',
+                color: 'cyan'
+            },
+            slice: {
+                title: '切片车间',
+                capacity: '2,000吨/年',
+                process: [
+                    '鱼片定位',
+                    '精确切片',
+                    '摆盘包装',
+                    '冷藏保存'
+                ],
+                equipment: [
+                    'MSC 180切片机',
+                    '摆盘机',
+                    '保鲜膜包装机',
+                    '冷藏展示柜'
+                ],
+                energy: '1,200 kW·h/吨',
+                color: 'purple'
+            },
+            can: {
+                title: '罐头车间',
+                capacity: '3,000吨/年',
+                process: [
+                    '鱼肉切块',
+                    '装罐排气',
+                    '密封杀菌',
+                    '冷却包装'
+                ],
+                equipment: [
+                    '切块机',
+                    '自动装罐机',
+                    '封罐机',
+                    '杀菌锅'
+                ],
+                energy: '2,000 kW·h/吨',
+                color: 'red'
+            },
+            floss: {
+                title: '鱼肉松车间',
+                capacity: '4,000吨/年',
+                process: [
+                    '鱼肉蒸煮',
+                    '拆碎炒松',
+                    '调味混合',
+                    '冷却包装'
+                ],
+                equipment: [
+                    '蒸煮锅',
+                    '炒松机',
+                    '调味混合机',
+                    '自动包装机'
+                ],
+                energy: '3,000 kW·h/吨',
+                color: 'yellow'
+            },
+            smoked: {
+                title: '熏鱼车间',
+                capacity: '3,000吨/年',
+                process: [
+                    '盐水腌制',
+                    '冷熏上色',
+                    '热熏杀菌',
+                    '冷却包装'
+                ],
+                equipment: [
+                    '腌制池',
+                    '烟熏炉',
+                    '冷却隧道',
+                    '真空包装机'
+                ],
+                energy: '2,500 kW·h/吨',
+                color: 'orange'
+            }
+        };
+
+        // 显示车间详情
+        function showWorkshopDetail(workshopType) {
+            const data = workshopData[workshopType];
+            const modal = document.getElementById('workshop-modal');
+            const title = document.getElementById('modal-title');
+            const content = document.getElementById('modal-content');
+
+            title.textContent = data.title;
+            content.innerHTML = `
+                <div class="space-y-6">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-${data.color}-600 mb-2">${data.capacity}</div>
+                        <div class="text-sm text-gray-600">年产能</div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold text-gray-900 mb-3">工艺流程</h4>
+                        <div class="space-y-2">
+                            ${data.process.map((step, index) => `
+                                <div class="flex items-center">
+                                    <span class="w-6 h-6 bg-${data.color}-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">${index + 1}</span>
+                                    <span>${step}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold text-gray-900 mb-3">主要设备</h4>
+                        <div class="grid grid-cols-2 gap-2">
+                            ${data.equipment.map(equipment => `
+                                <span class="bg-${data.color}-100 text-${data.color}-800 px-3 py-1 rounded-full text-sm">${equipment}</span>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="bg-${data.color}-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-${data.color}-900 mb-2">能耗指标</h4>
+                        <p class="text-${data.color}-700">单位产品电耗：${data.energy}</p>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 关闭车间详情模态框
+        function closeWorkshopModal() {
+            const modal = document.getElementById('workshop-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // 点击模态框外部关闭
+        document.getElementById('workshop-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeWorkshopModal();
+            }
+        });
+
+        // 初始化图表
+        function initCharts() {
+            // 车间产能分配图表
+            const workshopCtx = document.getElementById('workshopChart').getContext('2d');
+            new Chart(workshopCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['冰鲜车间', '冷冻车间', '切片车间', '罐头车间', '鱼肉松车间', '熏鱼车间'],
+                    datasets: [{
+                        data: [4000, 4000, 2000, 3000, 4000, 3000],
+                        backgroundColor: [
+                            '#10B981',
+                            '#06B6D4',
+                            '#8B5CF6',
+                            '#EF4444',
+                            '#F59E0B',
+                            '#F97316'
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 物料流程图
+            const materialCtx = document.getElementById('materialFlowChart').getContext('2d');
+            new Chart(materialCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['原料投入', '预处理损耗', '冰鲜产品', '冷冻产品', '切片产品', '罐头产品', '鱼肉松产品', '熏鱼产品', '鱼粉产品'],
+                    datasets: [{
+                        label: '物料量（吨）',
+                        data: [20000, 6000, 4000, 4000, 2000, 3000, 4000, 3000, 3600],
+                        backgroundColor: [
+                            '#3B82F6',
+                            '#EF4444',
+                            '#10B981',
+                            '#06B6D4',
+                            '#8B5CF6',
+                            '#EF4444',
+                            '#F59E0B',
+                            '#F97316',
+                            '#84CC16'
+                        ],
+                        borderColor: [
+                            '#1D4ED8',
+                            '#DC2626',
+                            '#059669',
+                            '#0891B2',
+                            '#7C3AED',
+                            '#DC2626',
+                            '#D97706',
+                            '#EA580C',
+                            '#65A30D'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '物料量（吨）'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: '物料流向'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initCharts();
+            
+            // 平滑滚动导航
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+
+        // 键盘事件监听
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeWorkshopModal();
+            }
+        });
+    </script>
+</body>
+</html>
