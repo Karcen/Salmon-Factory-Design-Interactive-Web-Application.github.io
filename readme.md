@@ -489,13 +489,3 @@ Thanks to the following projects and resources for their support:
 * **Chart.js** - Data visualization library
 
 * **All Contributors** - Developers who helped with the project
-
-
-
-***
-
-**版权所有 © 2025 Salmon Factory Design. 保留所有权利。**
-
-**All Rights Reserved © 2025 Salmon Factory Design.**
-
-> （注：文档部分内容可能由 AI 生成）
