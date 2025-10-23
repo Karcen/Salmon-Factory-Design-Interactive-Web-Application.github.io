@@ -93,11 +93,6 @@ salmon-factory-design/
 
 ├── README.md              # 项目说明文档 | Project documentation
 
-└── assets/                # 资源文件目录 | Asset directory
-
-&#x20;   ├── images/           # 图片资源 | Image resources
-
-&#x20;   └── icons/            # 图标文件 | Icon files
 ```
 
 ## 使用说明 | Usage Instructions
